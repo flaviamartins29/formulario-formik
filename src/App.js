@@ -1,33 +1,52 @@
 import React from 'react'
-import { Formik, Field } from 'formik'
+import { Formik, Field, Form } from 'formik'
 
 import './App.css';
 
-function onSubmit(values, actions) {
-  console.log('to aqui', values)
-
-}
 
 function App() {
+
+  function onSubmit(values, actions) {
+    alert(values)
+  
+  }
+
+  function validate(values) {
+    const errors = {}
+    if (!values.name){
+      errors.name = ' Input the Name'
+    }
+    if (!values.email){
+      errors.email = ' Input the Email'
+    }
+    return errors
+  }
+
   return (
     <div className="App">
       <Formik 
+      validateOnMount
+      validate  = {validate}
       onSubmit ={onSubmit}
       initialValues={{
         name: '',
         email: '', 
         Cel: ''}}
 
-      render={({ values, handleSubmit }) => (
-        <form onSubmit= {handleSubmit}>
+      render={({ values, errors}) => (
+        <Form>
           <div>
             <label>Name</label>
             <Field name="name" type="text"  />
+            {errors.name && (
+            <span>{errors.name}</span>
+            )}
           </div>
 
           <div>
             <label> email </label>
-            <Field name="email" type="text"  />
+            <Field name="email" type="email"  />
+            
           </div>
 
           <div>
@@ -36,7 +55,7 @@ function App() {
           </div>
 
           <button type="submit"> Submit </button>
-        </form>
+        </Form>
 
 
 )}
