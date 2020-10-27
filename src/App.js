@@ -1,51 +1,41 @@
 import React from 'react'
-import { Formik, Field, Form } from 'formik'
-
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import schema from './schema'
 import './App.css';
 
 
 function App() {
 
   function onSubmit(values, actions) {
-    alert(values)
+    console.log('SUBMIT', values)
   
   }
 
-  function validate(values) {
-    const errors = {}
-    if (!values.name){
-      errors.name = ' Input the Name'
-    }
-    if (!values.email){
-      errors.email = ' Input the Email'
-    }
-    return errors
-  }
+ 
 
   return (
     <div className="App">
       <Formik 
-      validateOnMount
-      validate  = {validate}
+     // validateOnMount
+      validationSchema = {schema}
       onSubmit ={onSubmit}
       initialValues={{
         name: '',
         email: '', 
         Cel: ''}}
 
-      render={({ values, errors}) => (
-        <Form>
-          <div>
+      render={() => (
+        <Form >
+          <div className="justify">
             <label>Name</label>
             <Field name="name" type="text"  />
-            {errors.name && (
-            <span>{errors.name}</span>
-            )}
+           
           </div>
 
           <div>
             <label> email </label>
             <Field name="email" type="email"  />
+            
             
           </div>
 
@@ -54,7 +44,7 @@ function App() {
             <Field name="cel" type="text"  />
           </div>
 
-          <button type="submit"> Submit </button>
+          <button type="submit" > Submit </button>
         </Form>
 
 
@@ -76,3 +66,21 @@ export default App;
   //})
 
 // }
+
+
+/*
+ function validate(values) {
+    const errors = {}
+    if (!values.name){
+      errors.name = ' Input the Name'
+    }
+    if (!values.email){
+      errors.email = ' Input the Email'
+    }
+    return errors
+  } 
+  
+  
+  
+  <ErrorMessage name="name"/>
+   <ErrorMessage name="name"/>*/
